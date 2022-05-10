@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import SignupForm from './SignupForm.jsx';
 import { useFormik } from 'formik';
+import * as Yup from 'yup';
 
 const LoginPage = () => {
   // const inputRef = useRef();
@@ -9,12 +10,20 @@ const LoginPage = () => {
   //   inputRef.current.focus();
   // }, []);
 
+  const validationShema = Yup.object({
+    username: Yup.string().required('is required'),
+    password: Yup.string().required('is required'),
+  });
+
   const formik = useFormik({
     initialValues: {
       username: '',
       password: '',
     },
-    onSubmit: () => {},
+    validationShema,
+    onSubmit: (values) => {
+      console.log('>>>>> submit', values);
+    },
   });
 
   return (
@@ -22,7 +31,10 @@ const LoginPage = () => {
       <div className="col-12 col-md-8 col-xxl-6">
         <div className="card shadow-sm">
           <div className="card-body row p-5">
-            <form className="col-12 col-md-6 mt-3 mt-mb-0">
+            <form
+              className="col-12 col-md-6 mt-3 mt-mb-0"
+              onSubmit={formik.handleSubmit}
+            >
               <h1 className="text-center mb-4">Войти</h1>
               <div className="form-floating mb-3">
                 <input
