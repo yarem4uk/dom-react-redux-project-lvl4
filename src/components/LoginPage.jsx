@@ -1,8 +1,22 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import SignupForm from './SignupForm.jsx';
 import { useFormik } from 'formik';
 
 const LoginPage = () => {
+  // const inputRef = useRef();
+
+  // useEffect(() => {
+  //   inputRef.current.focus();
+  // }, []);
+
+  const formik = useFormik({
+    initialValues: {
+      username: '',
+      password: '',
+    },
+    onSubmit: () => {},
+  });
+
   return (
     <div className="row justify-content-center align-content-center h-100">
       <div className="col-12 col-md-8 col-xxl-6">
@@ -18,12 +32,14 @@ const LoginPage = () => {
                   placeholder="Ваш ник"
                   id="username"
                   className="form-control"
-                  value=""
+                  onChange={formik.handleChange}
+                  value={formik.values.username}
                 />
                 <label htmlFor="username">Ваш ник</label>
               </div>
               <div className="form-floating mb-4">
                 <input
+                  onChange={formik.handleChange}
                   name="password"
                   autoComplete="current-password"
                   required
@@ -31,7 +47,7 @@ const LoginPage = () => {
                   type="password"
                   id="password"
                   className="form-control"
-                  value=""
+                  value={formik.values.password}
                 />
                 <label className="form-label" htmlFor="password">
                   Пароль
