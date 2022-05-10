@@ -4,7 +4,8 @@ import 'core-js/stable/index.js';
 import 'regenerator-runtime/runtime.js';
 
 import React from 'react';
-import { render } from 'react-dom';
+// import { render } from 'react-dom';
+import ReactDOM from 'react-dom/client';
 
 import App from './components/App.jsx';
 
@@ -14,7 +15,9 @@ if (process.env.NODE_ENV !== 'production') {
   localStorage.debug = 'chat:*';
 }
 
-const container = document.querySelector('#chat');
-container.classList.add('h-100');
+const mountNode = document.querySelector('#chat');
+mountNode.classList.add('h-100');
 
-render(<App />, container);
+const root = ReactDOM.createRoot(mountNode);
+
+root.render(<App />);
