@@ -1,7 +1,11 @@
+import axios from 'axios';
+
 import React, { useEffect, useRef } from 'react';
 import SignupForm from './SignupForm.jsx';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+
+import routes from '../routes.js';
 
 const LoginPage = () => {
   // const inputRef = useRef();
@@ -21,8 +25,13 @@ const LoginPage = () => {
       password: '',
     },
     validationShema,
-    onSubmit: (values) => {
-      console.log('>>>>> submit', values);
+    onSubmit: async ({ username, password }) => {
+      const { data } = await axios.post(routes.loginPath(), {
+        username,
+        password,
+      });
+      const { token } = data;
+      console.log(token)
     },
   });
 
