@@ -3,8 +3,6 @@ import axios from 'axios';
 import React, { useEffect, useRef } from 'react';
 import SignupForm from './SignupForm.jsx';
 import { useFormik } from 'formik';
-import { Button, Form } from 'react-bootstrap';
-
 import * as Yup from 'yup';
 
 import routes from '../routes.js';
@@ -33,7 +31,7 @@ const LoginPage = () => {
         password,
       });
       const { token } = data;
-      console.log(token);
+      console.log(token)
     },
   });
 
@@ -42,38 +40,47 @@ const LoginPage = () => {
       <div className="col-12 col-md-8 col-xxl-6">
         <div className="card shadow-sm">
           <div className="card-body row p-5">
-            <Form className="p-3" onSubmit={formik.handleSubmit}>
+            <form
+              className="col-12 col-md-6 mt-3 mt-mb-0"
+              onSubmit={formik.handleSubmit}
+            >
               <h1 className="text-center mb-4">Войти</h1>
-              <Form.Group className="mb-3">
-                <Form.Label htmlFor="username">Ваш ник</Form.Label>
-                <Form.Control
+              <div className="form-floating mb-3">
+                <input
                   name="username"
                   autoComplete="username"
                   required
                   placeholder="Ваш ник"
                   id="username"
+                  className="form-control"
                   onChange={formik.handleChange}
                   value={formik.values.username}
                 />
-              </Form.Group>
-
-              <Form.Group className="mb-3">
-                <Form.Label htmlFor="password">Пароль</Form.Label>
-                <Form.Control
+                <label htmlFor="username">Ваш ник</label>
+              </div>
+              <div className="form-floating mb-4">
+                <input
+                  onChange={formik.handleChange}
                   name="password"
                   autoComplete="current-password"
                   required
                   placeholder="Пароль"
-                  id="password"
                   type="password"
-                  onChange={formik.handleChange}
+                  id="password"
+                  className="form-control"
                   value={formik.values.password}
                 />
-              </Form.Group>
-              <Button variant="outline-primary" type="submit">
+                <label className="form-label" htmlFor="password">
+                  Пароль
+                </label>
+              </div>
+              <button
+                type="submit"
+                className="w-100 mb-3 btn btn-outline-primary"
+              >
                 Войти
-              </Button>
-            </Form>
+              </button>
+            </form>
           </div>
           <SignupForm />
         </div>
