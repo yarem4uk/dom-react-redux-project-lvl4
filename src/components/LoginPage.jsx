@@ -1,39 +1,59 @@
 import axios from 'axios';
 
-import React, { useEffect, useRef } from 'react';
-import SignupForm from './SignupForm.jsx';
+import React, { useEffect, useRef, useState } from 'react';
 import { useFormik } from 'formik';
 import { Button, Form } from 'react-bootstrap';
-
 import * as Yup from 'yup';
 
+import { useNavigate } from 'react-router-dom';
+
+import SignupForm from './SignupForm.jsx';
+import useAuth from '../hooks/index.jsx';
 import routes from '../routes.js';
 
 const LoginPage = () => {
-  // const inputRef = useRef();
+  const auth = useAuth();
+  const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   inputRef.current.focus();
-  // }, []);
+  const inputRef = useRef();
 
-  const validationShema = Yup.object({
-    username: Yup.string().required('is required'),
-    password: Yup.string().required('is required'),
-  });
+  useEffect(() => {
+    inputRef.current.focus();
+  }, []);
+
+  const [authFaild, setAuthFaild] = useState(false);
+
+  // const validationShema = Yup.object({
+  //   cpusername: Yup.string().required('is required'),
+  //   password: Yup.string().required('is required'),
+  // });
 
   const formik = useFormik({
     initialValues: {
       username: '',
       password: '',
     },
-    validationShema,
+    // validationShema,
     onSubmit: async ({ username, password }) => {
-      const { data } = await axios.post(routes.loginPath(), {
-        username,
-        password,
-      });
-      const { token } = data;
-      console.log(token);
+      setAuthFaild(false);
+      try {
+        const { data } = await axios.post(routes.loginPath(), {
+          username,
+          password,
+        });
+        const { token } = data;
+        localStorage.setItem('userId', JSON.stringify(token));
+        auth.logIn();
+        const path = '/';
+        navigate(path);
+      } catch (err) {
+        if (err.isAxiosError && err.response.status === 401) {
+          setAuthFaild(true);
+          inputRef.current.select();
+          return;
+        }
+        throw err;
+      }
     },
   });
 
@@ -47,28 +67,34 @@ const LoginPage = () => {
               <Form.Group className="mb-3">
                 <Form.Label htmlFor="username">Ваш ник</Form.Label>
                 <Form.Control
-                  name="username"
-                  autoComplete="username"
-                  required
-                  placeholder="Ваш ник"
-                  id="username"
                   onChange={formik.handleChange}
                   value={formik.values.username}
+                  placeholder="Ваш ник"
+                  autoComplete="username"
+                  name="username"
+                  id="username"
+                  isInvalid={authFaild}
+                  required
+                  ref={inputRef}
                 />
               </Form.Group>
 
               <Form.Group className="mb-3">
                 <Form.Label htmlFor="password">Пароль</Form.Label>
                 <Form.Control
-                  name="password"
-                  autoComplete="current-password"
-                  required
-                  placeholder="Пароль"
-                  id="password"
                   type="password"
                   onChange={formik.handleChange}
                   value={formik.values.password}
+                  placeholder="Пароль"
+                  autoComplete="current-password"
+                  name="password"
+                  id="password"
+                  isInvalid={authFaild}
+                  required
                 />
+                <Form.Control.Feedback type="invalid">
+                  Неверные имя пользователя или пароль
+                </Form.Control.Feedback>
               </Form.Group>
               <Button variant="outline-primary" type="submit">
                 Войти
