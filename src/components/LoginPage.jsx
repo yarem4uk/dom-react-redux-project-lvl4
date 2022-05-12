@@ -42,7 +42,7 @@ const LoginPage = () => {
           password,
         });
         const { token } = data;
-        localStorage.setItem('userId', JSON.stringify(token));
+        localStorage.setItem('user', JSON.stringify({ token, username }));
         auth.logIn();
         const path = '/';
         navigate(path);

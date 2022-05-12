@@ -2,3 +2,5 @@ node_modules
 dist
 dep
 devDep
+slack.template.html
+slack.html

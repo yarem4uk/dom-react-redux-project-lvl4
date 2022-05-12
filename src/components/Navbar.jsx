@@ -1,4 +1,23 @@
 import React from 'react';
+import { Button } from 'react-bootstrap';
+
+import useAuth from '../hooks/index.jsx';
+
+const AuthButton = () => {
+  const auth = useAuth();
+  const user = localStorage.getItem('user')
+  console.log(auth)
+
+  return user || auth.loggedIn ? <Button onClick={auth.logOut}>Выйти</Button> : null;
+};
+
+// return auth.loggedIn ? (
+//   <Button onClick={auth.logOut}>Log out</Button>
+// ) : (
+//   <Button as={Link} to="/login" state={{ from: location }}>
+//     Log in
+//   </Button>
+// );
 
 const Navbar = () => {
   return (
@@ -7,6 +26,7 @@ const Navbar = () => {
         <a className="navbar-brand" href="/">
           Slack
         </a>
+        <AuthButton />
       </div>
     </nav>
   );

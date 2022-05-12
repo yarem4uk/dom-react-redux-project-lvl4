@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './Navbar.jsx';
 import PageNotFound from './PageNotFound.jsx';
 import LoginPage from './LoginPage.jsx';
+import ChatPage from './ChatPage.jsx';
 
 import AuthContext from '../contexts/index.jsx';
 import useAuth from '../hooks/index.jsx';
@@ -12,14 +13,12 @@ import useAuth from '../hooks/index.jsx';
 const AuthProvider = ({ children }) => {
   const [loggedIn, setLoggedIn] = useState(false);
 
-  console.log('>>>>>>>>>>>>>>', loggedIn);
-
   const logIn = () => {
     setLoggedIn(true);
   };
 
   const logOut = () => {
-    localStorage.removeItem('userId');
+    localStorage.removeItem('user');
     setLoggedIn(false);
   };
 
@@ -32,31 +31,31 @@ const AuthProvider = ({ children }) => {
 
 const AuthRoute = ({ children }) => {
   const auth = useAuth();
-  return auth.loggedIn ? null : children;
+  const user = localStorage.getItem('user');
+  return user || auth.loggedIn ? <ChatPage /> : children;
 };
 
 const App = () => {
   return (
     <AuthProvider>
       <div className="d-flex flex-column h-100">
-        <Navbar />
         <Router>
-          <div className="container-fluid h-100">
-            <Routes>
-              <Route
-                path="/"
-                element={
-                  <AuthRoute>
-                    <LoginPage />
-                  </AuthRoute>
-                }
-              />
-              <Route path="/login" element={<LoginPage />} />
-              <Route path="*" element={<PageNotFound />} />
-            </Routes>
-          </div>
+          <Navbar />
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <AuthRoute>
+                  <LoginPage />
+                </AuthRoute>
+              }
+            />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="*" element={<PageNotFound />} />
+          </Routes>
         </Router>
       </div>
+      <div className="Toastify" />
     </AuthProvider>
   );
 };
