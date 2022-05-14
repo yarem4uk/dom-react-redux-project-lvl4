@@ -1,6 +1,19 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+// import cn from 'classnames';
+
+// import { useSelector, useDispatch } from 'react-redux';
+
+import Channels from './Channels.jsx';
 
 const ChatPage = () => {
+  // const dispatch = useDispatch();
+
+  // useEffect(() => {
+  //   dispatch(fetchChannels());
+  // }, [dispatch]);
+
+  // const { channels, currentChannelId } = useSelector((state) => state.channels);
+
   return (
     <div className="container h-100 my-4 overflow-hidden rounded shadow">
       <div className="row h-100 bg-white flex-md-row">
@@ -14,17 +27,7 @@ const ChatPage = () => {
               <span className="visually-hidden">+</span>
             </button>
           </div>
-          <ul className="nav flex-column nav-pills nav-fill px-2">
-            <li className="nav-item w-100">
-              <button
-                type="button"
-                className="w-100 rounded-0 text-start btn btn-secondary"
-              >
-                <span className="me-1">#</span>
-                general
-              </button>
-            </li>
-          </ul>
+          <Channels />
         </div>
         <div className="col p-0 h-100">
           <div className="d-flex flex-column h-100">
@@ -39,26 +42,7 @@ const ChatPage = () => {
                 <b>Zyrael</b>: hello
               </div>
             </div>
-            <div className="mt-auto px-5 py-3">
-              <form className="py-1 border rounded-2">
-                <div className="input-group has-validation">
-                  <input
-                    name="body"
-                    aria-label="Новое сообщение"
-                    placeholder="Введите сообщение..."
-                    className="border-0 p-0 ps-2 form-control"
-                    value=""
-                  />
-                  <button
-                    type="submit"
-                    disabled=""
-                    className="btn btn-group-vertical"
-                  >
-                    <span className="visually-hidden">Отправить</span>
-                  </button>
-                </div>
-              </form>
-            </div>
+            <div>form</div>
           </div>
         </div>
       </div>

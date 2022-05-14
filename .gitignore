@@ -4,3 +4,4 @@ dep
 devDep
 slack.template.html
 slack.html
+form_message.html

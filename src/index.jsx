@@ -4,9 +4,10 @@ import 'core-js/stable/index.js';
 import 'regenerator-runtime/runtime.js';
 
 import React from 'react';
-// import { render } from 'react-dom';
+import { Provider } from 'react-redux';
 import ReactDOM from 'react-dom/client';
 
+import store from './slices/index.js';
 import App from './components/App.jsx';
 
 import '../assets/application.scss';
@@ -20,4 +21,8 @@ mountNode.classList.add('h-100');
 
 const root = ReactDOM.createRoot(mountNode);
 
-root.render(<App />);
+root.render(
+  <Provider store={store}>
+    <App />
+  </Provider>
+);
