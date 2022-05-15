@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './Navbar.jsx';
 import PageNotFound from './PageNotFound.jsx';
 import LoginPage from './LoginPage.jsx';
-import ChatPage from './ChatPage.jsx';
+import Chat from './Chat.jsx';
 
 import AuthContext from '../contexts/index.jsx';
 import useAuth from '../hooks/index.jsx';
@@ -32,7 +32,7 @@ const AuthProvider = ({ children }) => {
 const AuthRoute = ({ children }) => {
   const auth = useAuth();
   const user = localStorage.getItem('user');
-  return user || auth.loggedIn ? <ChatPage /> : children;
+  return user || auth.loggedIn ? <Chat /> : children;
 };
 
 const App = () => {

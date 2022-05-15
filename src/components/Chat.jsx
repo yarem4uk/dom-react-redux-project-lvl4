@@ -1,18 +1,23 @@
 import React, { useEffect } from 'react';
 // import cn from 'classnames';
 
-// import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchChannels } from '../slices/channelsSlice.js';
 
 import Channels from './Channels.jsx';
+import Message from './Message.jsx';
 
-const ChatPage = () => {
+const messages = [
+  { body: 'first', channelId: 1, username: 'admin', id: 1 },
+  { body: 'second', channelId: 2, username: 'admin', id: 2 },
+  { body: 'hello', channelId: 1, username: 'admin', id: 3 },
+  { body: 'mama', channelId: 1, username: 'alena', id: 4 },
+];
+
+const Chat = () => {
   // const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   dispatch(fetchChannels());
-  // }, [dispatch]);
-
-  // const { channels, currentChannelId } = useSelector((state) => state.channels);
+  const { currentChannelId } = useSelector((state) => state.channels);
 
   return (
     <div className="container h-100 my-4 overflow-hidden rounded shadow">
@@ -38,9 +43,11 @@ const ChatPage = () => {
               <span className="text-muted">362 сообщения</span>
             </div>
             <div id="messages-box" className="chat-messages overflow-auto px-5">
-              <div className="text-break mb-2">
-                <b>Zyrael</b>: hello
-              </div>
+              {messages.map(({ id, body, channelId, username }) => {
+                return channelId === currentChannelId ? (
+                  <Message key={id} body={body} username={username} />
+                ) : null;
+              })}
             </div>
             <div>form</div>
           </div>
@@ -50,4 +57,4 @@ const ChatPage = () => {
   );
 };
 
-export default ChatPage;
+export default Chat;
