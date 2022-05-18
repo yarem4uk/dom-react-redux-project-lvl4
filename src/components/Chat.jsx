@@ -6,18 +6,20 @@ import { fetchChannels } from '../slices/channelsSlice.js';
 
 import Channels from './Channels.jsx';
 import Message from './Message.jsx';
+import MessageForm from './MessageForm.jsx';
 
-const messages = [
-  { body: 'first', channelId: 1, username: 'admin', id: 1 },
-  { body: 'second', channelId: 2, username: 'admin', id: 2 },
-  { body: 'hello', channelId: 1, username: 'admin', id: 3 },
-  { body: 'mama', channelId: 1, username: 'alena', id: 4 },
-];
+// const messages = [
+//   { body: 'first', channelId: 1, username: 'admin', id: 1 },
+//   { body: 'second', channelId: 2, username: 'admin', id: 2 },
+//   { body: 'hello', channelId: 1, username: 'admin', id: 3 },
+//   { body: 'mama', channelId: 1, username: 'alena', id: 4 },
+// ];
 
 const Chat = () => {
   // const dispatch = useDispatch();
 
   const { currentChannelId } = useSelector((state) => state.channels);
+  const { messages } = useSelector((state) => state.messages);
 
   return (
     <div className="container h-100 my-4 overflow-hidden rounded shadow">
@@ -49,7 +51,7 @@ const Chat = () => {
                 ) : null;
               })}
             </div>
-            <div>form</div>
+            <MessageForm />
           </div>
         </div>
       </div>

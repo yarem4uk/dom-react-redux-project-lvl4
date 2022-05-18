@@ -5,10 +5,11 @@ import useAuth from '../hooks/index.jsx';
 
 const AuthButton = () => {
   const auth = useAuth();
-  const user = localStorage.getItem('user')
-  console.log(auth)
+  const user = localStorage.getItem('user');
 
-  return user || auth.loggedIn ? <Button onClick={auth.logOut}>Выйти</Button> : null;
+  return user || auth.loggedIn ? (
+    <Button onClick={auth.logOut}>Выйти</Button>
+  ) : null;
 };
 
 // return auth.loggedIn ? (
