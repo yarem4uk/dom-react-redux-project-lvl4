@@ -1,25 +1,38 @@
 import React, { useEffect } from 'react';
 // import cn from 'classnames';
-
-import { useSelector, useDispatch } from 'react-redux';
-import { fetchChannels } from '../slices/channelsSlice.js';
+import { io } from 'socket.io-client';
 
 import Channels from './Channels.jsx';
 import Message from './Message.jsx';
 import MessageForm from './MessageForm.jsx';
 
-// const messages = [
-//   { body: 'first', channelId: 1, username: 'admin', id: 1 },
-//   { body: 'second', channelId: 2, username: 'admin', id: 2 },
-//   { body: 'hello', channelId: 1, username: 'admin', id: 3 },
-//   { body: 'mama', channelId: 1, username: 'alena', id: 4 },
-// ];
+import { useSelector, useDispatch } from 'react-redux';
+
+import { fetchChannels } from '../slices/channelsSlice.js';
+import { actions as messagesActions } from '../slices/messagesSlice.js';
+
+const domain = 'http://localhost:5000';
+const socket = io(domain);
 
 const Chat = () => {
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-  const { currentChannelId } = useSelector((state) => state.channels);
+  useEffect(() => {
+    dispatch(fetchChannels());
+  }, [dispatch]);
+
+  socket.on('newMessage', (data) => {
+    console.log('socket io');
+    dispatch(messagesActions.addMessage(data));
+  });
+
+  const { channels, currentChannelId } = useSelector((state) => state.channels);
   const { messages } = useSelector((state) => state.messages);
+
+  const currentChannel = channels.find((item) => item.id === currentChannelId);
+  console.log(currentChannel, 'currentChannel');
+
+  console.log(messages, 'chat');
 
   return (
     <div className="container h-100 my-4 overflow-hidden rounded shadow">

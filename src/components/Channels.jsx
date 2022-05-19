@@ -10,10 +10,6 @@ import {
 const Channels = () => {
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(fetchChannels());
-  }, [dispatch]);
-
   const { channels, currentChannelId } = useSelector((state) => state.channels);
 
   const chnlStyles = (current) => {
