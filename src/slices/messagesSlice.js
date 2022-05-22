@@ -1,8 +1,7 @@
 // @ts-check
 /* eslint-disable no-param-reassign */
-import axios from 'axios';
 
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import { fetchChannels } from './channelsSlice.js';
 
 const initialState = {
@@ -16,6 +15,7 @@ const messagesSlice = createSlice({
     addMessage(state, { payload }) {
       state.messages.push(payload);
     },
+    // addMessage() {},
   },
   extraReducers: (builder) => {
     builder.addCase(fetchChannels.fulfilled, (state, action) => {

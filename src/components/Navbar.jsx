@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
 
-import useAuth from '../hooks/index.jsx';
+import { useAuth } from '../hooks/index.jsx';
 
 const AuthButton = () => {
   const auth = useAuth();

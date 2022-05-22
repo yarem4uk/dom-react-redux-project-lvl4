@@ -1,18 +1,12 @@
 import React, { useRef, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-
-import { io } from 'socket.io-client';
-
-import { useFormik } from 'formik';
-
 import { Button, Form } from 'react-bootstrap';
-import routes from '../routes.js';
-import axios from 'axios';
 
-const domain = 'http://localhost:5000';
-const socket = io(domain);
+import { useSelector } from 'react-redux';
+import { useFormik } from 'formik';
+import { useSocket } from '../hooks/index.jsx';
 
 const MessageForm = () => {
+  const socket = useSocket();
   const bodyRef = useRef();
 
   const { username } = JSON.parse(localStorage.getItem('user'));

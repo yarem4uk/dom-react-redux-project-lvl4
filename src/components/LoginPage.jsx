@@ -8,7 +8,7 @@ import * as Yup from 'yup';
 import { useNavigate } from 'react-router-dom';
 
 import SignupForm from './SignupForm.jsx';
-import useAuth from '../hooks/index.jsx';
+import { useAuth } from '../hooks/index.jsx';
 import routes from '../routes.js';
 
 const LoginPage = () => {
